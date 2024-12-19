@@ -4,7 +4,12 @@
  */
 package newpackage;
 
+import br.com.DBConnection.MySqlConnection;
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class LoginMenu extends javax.swing.JFrame {
 
@@ -24,21 +29,108 @@ public class LoginMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jlUser = new javax.swing.JLabel();
+        jlPassword = new javax.swing.JLabel();
+        jtUser = new javax.swing.JTextField();
+        jtPassword = new javax.swing.JPasswordField();
+        jbJoin = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
+        setPreferredSize(new java.awt.Dimension(500, 400));
+        setSize(new java.awt.Dimension(500, 400));
+
+        jlUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlUser.setText("Usuário:");
+
+        jlPassword.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jlPassword.setText("Senha:");
+
+        jtUser.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jtUser.setToolTipText("Insira o nome de usuário.");
+        jtUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtUserKeyPressed(evt);
+            }
+        });
+
+        jtPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jtPassword.setToolTipText("Insira a senha.");
+        jtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtPasswordKeyPressed(evt);
+            }
+        });
+
+        jbJoin.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jbJoin.setText("Entrar");
+        jbJoin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbJoinActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlUser)
+                            .addComponent(jlPassword))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtUser)
+                            .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(jbJoin)))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlUser)
+                    .addComponent(jtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlPassword)
+                    .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jbJoin)
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
+    public String connectDB(){
+        MySqlConnection.getMySqlConnection();
+        
+        return MySqlConnection.status;
+    }
+    
+    private void jtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtUserKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jtPassword.requestFocus();
+        }
+    }//GEN-LAST:event_jtUserKeyPressed
+
+    private void jtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtPasswordKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+        }
+    }//GEN-LAST:event_jtPasswordKeyPressed
+
+    private void jbJoinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbJoinActionPerformed
+        connectDB();
+    }//GEN-LAST:event_jbJoinActionPerformed
 
     /**
      * @param args the command line arguments
@@ -53,5 +145,10 @@ public class LoginMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jbJoin;
+    private javax.swing.JLabel jlPassword;
+    private javax.swing.JLabel jlUser;
+    private javax.swing.JPasswordField jtPassword;
+    private javax.swing.JTextField jtUser;
     // End of variables declaration//GEN-END:variables
 }
