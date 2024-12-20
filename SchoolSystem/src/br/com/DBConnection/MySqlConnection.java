@@ -10,16 +10,27 @@ import java.sql.SQLException;
 
 public class MySqlConnection {
 
+    
+    public static boolean login(String dbUser, String dbPassword){
+        
+        if(dbUser.equals("admin") && dbPassword.equals("admin123")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public static String status = "Não conectou...";
     
     public static java.sql.Connection getMySqlConnection(){
         Connection connection = null;
         
         try{
-            String driverName = "com.mysql.jbdc.Driver";
+            String driverName = "com.mysql.cj.jdbc.Driver";
             Class.forName(driverName);
             
-            String serverName = "localhost";
+            String serverName = "localhost:3306";
             String myDataBase = "mysql";
             String url = "jdbc:mysql://" + serverName + "/" + myDataBase;
             String username = "admin";

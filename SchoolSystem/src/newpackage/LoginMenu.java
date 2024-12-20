@@ -34,10 +34,10 @@ public class LoginMenu extends javax.swing.JFrame {
         jtUser = new javax.swing.JTextField();
         jtPassword = new javax.swing.JPasswordField();
         jbJoin = new javax.swing.JButton();
+        jlError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
-        setPreferredSize(new java.awt.Dimension(500, 400));
         setSize(new java.awt.Dimension(500, 400));
 
         jlUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -70,25 +70,35 @@ public class LoginMenu extends javax.swing.JFrame {
             }
         });
 
+        jlError.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jlError.setForeground(new java.awt.Color(204, 0, 0));
+        jlError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jlError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlUser)
-                            .addComponent(jlPassword))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtUser)
-                            .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(201, 201, 201)
-                        .addComponent(jbJoin)))
-                .addContainerGap(145, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(142, 142, 142)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlUser)
+                                    .addComponent(jlPassword))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtUser)
+                                    .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(200, 200, 200)
+                                .addComponent(jbJoin)))
+                        .addGap(0, 139, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,7 +113,9 @@ public class LoginMenu extends javax.swing.JFrame {
                     .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbJoin)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(jlError, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,9 +123,24 @@ public class LoginMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     public String connectDB(){
-        MySqlConnection.getMySqlConnection();
         
-        return MySqlConnection.status;
+        String user = jtUser.getText();
+        String password = jtPassword.getText();
+        
+        if(MySqlConnection.login(user, password)){
+            Connection connection = MySqlConnection.getMySqlConnection();
+            if(connection!=null){
+               System.out.println("Conectado com sucesso!");
+            }
+            else{
+                System.out.println("Não foi possível conectar!");
+            }
+            return MySqlConnection.status;
+        }
+        else{
+            jlError.setText("Usuário ou senha incorretos!");
+            return MySqlConnection.status;
+        }
     }
     
     private void jtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtUserKeyPressed
@@ -124,7 +151,7 @@ public class LoginMenu extends javax.swing.JFrame {
 
     private void jtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtPasswordKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            
+            connectDB();
         }
     }//GEN-LAST:event_jtPasswordKeyPressed
 
@@ -146,6 +173,7 @@ public class LoginMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbJoin;
+    private javax.swing.JLabel jlError;
     private javax.swing.JLabel jlPassword;
     private javax.swing.JLabel jlUser;
     private javax.swing.JPasswordField jtPassword;
