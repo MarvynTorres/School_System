@@ -8,11 +8,13 @@ import br.com.DBConnection.MySqlConnection;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 
 public class LoginMenu extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form LoginMenu
      */
@@ -29,25 +31,28 @@ public class LoginMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jlUser = new javax.swing.JLabel();
-        jlPassword = new javax.swing.JLabel();
         jtUser = new javax.swing.JTextField();
         jtPassword = new javax.swing.JPasswordField();
         jbJoin = new javax.swing.JButton();
-        jlError = new javax.swing.JLabel();
+        jbShowPassword = new javax.swing.JButton();
+        jlLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMinimumSize(new java.awt.Dimension(500, 400));
+        setPreferredSize(new java.awt.Dimension(500, 400));
+        setResizable(false);
         setSize(new java.awt.Dimension(500, 400));
 
-        jlUser.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jlUser.setText("Usuário:");
-
-        jlPassword.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jlPassword.setText("Senha:");
-
         jtUser.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jtUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtUser.setToolTipText("Insira o nome de usuário.");
+        jtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtUserActionPerformed(evt);
+            }
+        });
         jtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jtUserKeyPressed(evt);
@@ -55,6 +60,7 @@ public class LoginMenu extends javax.swing.JFrame {
         });
 
         jtPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jtPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jtPassword.setToolTipText("Insira a senha.");
         jtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -62,83 +68,84 @@ public class LoginMenu extends javax.swing.JFrame {
             }
         });
 
-        jbJoin.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jbJoin.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jbJoin.setText("Entrar");
+        jbJoin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbJoin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbJoinActionPerformed(evt);
             }
         });
 
-        jlError.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jlError.setForeground(new java.awt.Color(204, 0, 0));
-        jlError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jbShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/closed_eye.png"))); // NOI18N
+        jbShowPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbShowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbShowPasswordActionPerformed(evt);
+            }
+        });
+
+        jlLogin.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        jlLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlLogin.setText("LOGIN");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(113, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jlError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jtUser, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jlLogin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(142, 142, 142)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlUser)
-                                    .addComponent(jlPassword))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtUser)
-                                    .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(200, 200, 200)
-                                .addComponent(jbJoin)))
-                        .addGap(0, 139, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jbJoin, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                            .addComponent(jtPassword))
+                        .addGap(18, 18, 18)
+                        .addComponent(jbShowPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(78, 78, 78))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlUser)
-                    .addComponent(jtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(jlLogin)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlPassword)
-                    .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbShowPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jbJoin)
-                .addGap(38, 38, 38)
-                .addComponent(jlError, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(109, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
+    
     public String connectDB(){
-        
         String user = jtUser.getText();
         String password = jtPassword.getText();
         
         if(MySqlConnection.login(user, password)){
             Connection connection = MySqlConnection.getMySqlConnection();
             if(connection!=null){
-               System.out.println("Conectado com sucesso!");
+               JOptionPane.showMessageDialog(null, "Conectado com sucesso!");
+               new SystemMenu().setVisible(true);
+               this.dispose();
             }
             else{
-                System.out.println("Não foi possível conectar!");
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar!");
             }
             return MySqlConnection.status;
         }
         else{
-            jlError.setText("Usuário ou senha incorretos!");
+            JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos!");
             return MySqlConnection.status;
         }
     }
@@ -148,7 +155,8 @@ public class LoginMenu extends javax.swing.JFrame {
             jtPassword.requestFocus();
         }
     }//GEN-LAST:event_jtUserKeyPressed
-
+    
+    
     private void jtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtPasswordKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             connectDB();
@@ -159,9 +167,25 @@ public class LoginMenu extends javax.swing.JFrame {
         connectDB();
     }//GEN-LAST:event_jbJoinActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    boolean clicked = false;
+    
+    private void jbShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbShowPasswordActionPerformed
+        if(clicked == false){
+            jtPassword.setEchoChar((char) 0);
+            jbShowPassword.setIcon(new ImageIcon("src/img/opened_eye.png"));
+            clicked = true;
+        }
+        else{
+            jtPassword.setEchoChar('*');
+            jbShowPassword.setIcon(new ImageIcon("src/img/closed_eye.png"));
+            clicked = false;
+        }
+    }//GEN-LAST:event_jbShowPasswordActionPerformed
+
+    private void jtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtUserActionPerformed
+   
     public static void main(String args[]) {
         FlatDarkLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -173,9 +197,8 @@ public class LoginMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbJoin;
-    private javax.swing.JLabel jlError;
-    private javax.swing.JLabel jlPassword;
-    private javax.swing.JLabel jlUser;
+    private javax.swing.JButton jbShowPassword;
+    private javax.swing.JLabel jlLogin;
     private javax.swing.JPasswordField jtPassword;
     private javax.swing.JTextField jtUser;
     // End of variables declaration//GEN-END:variables
