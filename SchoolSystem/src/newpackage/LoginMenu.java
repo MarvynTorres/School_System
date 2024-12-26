@@ -10,8 +10,6 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 
 public class LoginMenu extends javax.swing.JFrame {
     
